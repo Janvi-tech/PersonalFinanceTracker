@@ -1,0 +1,87 @@
+package com.example.financeTracker.controller;
+
+import com.example.financeTracker.entity.Expense;
+import com.example.financeTracker.entity.User;
+import com.example.financeTracker.repository.ExpenseRepository;
+import com.example.financeTracker.repository.UserRepository;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping("/expenses")
+public class ExpenseController {
+
+    private final ExpenseRepository expenseRepository;
+    private final UserRepository userRepository;
+
+    public ExpenseController(
+            ExpenseRepository expenseRepository,  UserRepository userRepository) {
+
+        this.expenseRepository = expenseRepository;
+        this.userRepository = userRepository;
+    }
+
+    @GetMapping
+    public String showExpensePage(Model model,  Authentication authentication) {
+    	
+    	User user = getLoggedInUser(authentication);
+    	
+        model.addAttribute(
+                "expenseList",
+                expenseRepository.findByUser(user)
+        );
+
+        model.addAttribute(
+                "expense",
+                new Expense()
+        );
+
+        return "expenses";
+    }
+
+    @PostMapping("/add")
+    public String addExpense(
+            @ModelAttribute Expense expense, Authentication authentication) {
+    	User user = getLoggedInUser(authentication);
+    	expense.setUser(user);
+        expenseRepository.save(expense);
+
+        return "redirect:/expenses";
+    }
+    
+    
+    @GetMapping("/edit/{id}")
+    public String showEditPage(
+            @PathVariable Long id,
+            Model model) {
+
+        Expense expense =
+                expenseRepository.findById(id)
+                .orElseThrow();
+
+        model.addAttribute("expense", expense);
+
+        return "edit-expense";
+    }
+
+    @PostMapping("/update")
+    public String updateExpense(
+            @ModelAttribute Expense expense) {
+
+        expenseRepository.save(expense);
+
+        return "redirect:/expenses";
+    }
+    
+    @GetMapping("/delete/{id}")
+    public String deleteExpense(
+            @PathVariable Long id) {
+
+        expenseRepository.deleteById(id);
+
+        return "redirect:/expenses";
+    }
+}

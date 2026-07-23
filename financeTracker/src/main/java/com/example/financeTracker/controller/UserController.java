@@ -1,0 +1,67 @@
+package com.example.financeTracker.controller;
+
+import com.example.financeTracker.entity.User;
+import com.example.financeTracker.service.UserService;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+public class UserController {
+
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    // Display registration page
+    @GetMapping("/register")
+    public String showRegisterPage(Model model) {
+
+        model.addAttribute("user", new User());
+
+        return "register";
+    }
+
+    // Process registration
+    @PostMapping("/register")
+    public String registerUser(
+            @ModelAttribute("user") User user,
+            Model model) {
+
+        // Check duplicate username
+        if (userService.usernameExists(user.getUsername())) {
+
+            model.addAttribute(
+                    "error",
+                    "Username already exists");
+
+            return "register";
+        }
+
+        // Check duplicate email
+        if (userService.emailExists(user.getEmail())) {
+
+            model.addAttribute(
+                    "error",
+                    "Email already exists");
+
+            return "register";
+        }
+
+        // Save user with hashed password
+        userService.registerUser(user);
+
+        return "redirect:/login";
+    }
+    
+    @GetMapping("/login")
+    public String showLoginPage() {
+
+        return "login";
+    }
+    
+    
+}

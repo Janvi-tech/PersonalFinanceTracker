@@ -1,0 +1,38 @@
+package com.example.financeTracker.repository;
+
+import com.example.financeTracker.entity.Income;
+import com.example.financeTracker.entity.User;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+public interface IncomeRepository extends JpaRepository<Income, Long> {
+	
+	List<Income> findByUser(User user);
+	
+	Optional<Income> findByIdAndUser(
+            Long id,
+            User user
+    );
+	
+	@Query("SELECT COALESCE(SUM(i.amount), 0) FROM Income i WHERE i.user = :user")
+    Double getTotalIncome(@Param("user") User user);
+	
+	@Query("""
+		       SELECT COALESCE(SUM(i.amount), 0)
+		       FROM Income i
+		       WHERE MONTH(i.incomeDate) = :month
+		       AND YEAR(i.incomeDate) = :year 
+		       AND i.user = :user
+		       """)
+		Double getMonthlyIncome(
+		        @Param("month") int month,
+		        @Param("year") int year, 
+		        @Param("user") User user);
+	
+	
+}

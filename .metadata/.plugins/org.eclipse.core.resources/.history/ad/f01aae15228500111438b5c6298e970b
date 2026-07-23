@@ -1,0 +1,62 @@
+package com.example.financeTracker.controller;
+
+import com.example.financeTracker.entity.Budget;
+import com.example.financeTracker.repository.BudgetRepository;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import com.example.financeTracker.dto.BudgetSummary;
+import com.example.financeTracker.entity.Expense;
+import com.example.financeTracker.repository.ExpenseRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Controller
+@RequestMapping("/budgets")
+public class BudgetController {
+
+    private final BudgetRepository budgetRepository;
+
+    public BudgetController(
+            BudgetRepository budgetRepository) {
+
+        this.budgetRepository = budgetRepository;
+    }
+
+    @GetMapping
+    public String showBudgetPage(Model model) {
+
+        model.addAttribute(
+                "budget",
+                new Budget()
+        );
+
+        model.addAttribute(
+                "budgetList",
+                budgetRepository.findAll()
+        );
+
+        return "budgets";
+    }
+
+    @PostMapping("/add")
+    public String addBudget(
+            @ModelAttribute Budget budget) {
+
+        budgetRepository.save(budget);
+
+        return "redirect:/budgets";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteBudget(
+            @PathVariable Long id) {
+
+        budgetRepository.deleteById(id);
+
+        return "redirect:/budgets";
+    }
+}

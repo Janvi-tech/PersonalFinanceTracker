@@ -1,0 +1,106 @@
+package com.example.financeTracker.controller;
+
+import com.example.financeTracker.repository.IncomeRepository;
+import com.example.financeTracker.repository.ExpenseRepository;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Controller
+public class DashboardController {
+
+    private final IncomeRepository incomeRepository;
+    private final ExpenseRepository expenseRepository;
+
+    public DashboardController(
+            IncomeRepository incomeRepository,
+            ExpenseRepository expenseRepository) {
+
+        this.incomeRepository = incomeRepository;
+        this.expenseRepository = expenseRepository;
+    }
+
+    @GetMapping("/dashboard")
+    public String showDashboard(Model model) {
+
+        Double totalIncome =
+                incomeRepository.getTotalIncome();
+
+        Double totalExpense =
+                expenseRepository.getTotalExpense();
+
+        Double balance =
+                totalIncome - totalExpense;
+
+        List<Object[]> expenseData =
+                expenseRepository.getExpenseByCategory();
+
+        model.addAttribute(
+                "totalIncome",
+                totalIncome
+        );
+
+        model.addAttribute(
+                "totalExpense",
+                totalExpense
+        );
+
+        model.addAttribute(
+                "balance",
+                balance
+        );
+
+        model.addAttribute(
+                "expenseData",
+                expenseData
+        );
+
+        return "dashboard";
+    }
+    
+    @GetMapping("/dashboard/monthly")
+    public String showMonthlyDashboard(
+            @RequestParam int month,
+            @RequestParam int year,
+            Model model) {
+
+        Double monthlyIncome =
+                incomeRepository.getMonthlyIncome(
+                        month, year);
+
+        Double monthlyExpense =
+                expenseRepository.getMonthlyExpense(
+                        month, year);
+
+        Double balance =
+                monthlyIncome - monthlyExpense;
+
+        model.addAttribute(
+                "totalIncome",
+                monthlyIncome);
+
+        model.addAttribute(
+                "totalExpense",
+                monthlyExpense);
+
+        model.addAttribute(
+                "balance",
+                balance);
+
+        model.addAttribute(
+                "selectedMonth",
+                month);
+
+        model.addAttribute(
+                "selectedYear",
+                year);
+
+        return "dashboard";
+    }
+}

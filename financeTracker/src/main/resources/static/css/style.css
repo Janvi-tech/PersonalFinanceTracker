@@ -1,0 +1,440 @@
+/* ===========================
+   Google Font
+=========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+
+    background:#f4f7fb;
+
+    color:#1e293b;
+}
+
+/* ===========================
+   NAVBAR
+=========================== */
+
+nav{
+
+    background:#0f172a;
+
+    height:70px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 50px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.15);
+
+}
+
+nav .logo{
+
+    color:white;
+
+    font-size:24px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+}
+
+nav ul{
+
+    display:flex;
+
+    list-style:none;
+
+    gap:30px;
+}
+
+nav ul li a{
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:500;
+
+    transition:.3s;
+}
+
+nav ul li a:hover{
+
+    color:#38bdf8;
+}
+
+/* ===========================
+   CONTAINER
+=========================== */
+
+.container{
+
+    width:95%;
+
+    margin:auto;
+
+    padding:35px;
+}
+
+/* ===========================
+   PAGE TITLE
+=========================== */
+
+h1{
+
+    font-size:34px;
+
+    color:#0f172a;
+
+    margin-bottom:10px;
+}
+
+h2{
+
+    color:#334155;
+
+    margin-bottom:20px;
+}
+
+p{
+
+    color:#64748b;
+}
+
+/* ===========================
+   DASHBOARD CARDS
+=========================== */
+
+.dashboard-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+
+    margin:35px 0;
+}
+
+.dashboard-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:28px;
+
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
+
+    border-left:6px solid #2563eb;
+
+    transition:.3s;
+}
+
+.dashboard-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+}
+
+.dashboard-card h3{
+
+    color:#64748b;
+
+    font-size:16px;
+
+    margin-bottom:15px;
+}
+
+.dashboard-card h2{
+
+    color:#0f172a;
+
+    font-size:34px;
+}
+
+.income{
+
+    border-left-color:#16a34a;
+}
+
+.expense{
+
+    border-left-color:#dc2626;
+}
+
+.balance{
+
+    border-left-color:#2563eb;
+}
+
+.budget{
+
+    border-left-color:#7c3aed;
+}
+
+/* ===========================
+   CHARTS
+=========================== */
+
+.chart-row{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:25px;
+
+    margin-top:25px;
+}
+
+.chart-box{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.chart-box h2{
+
+    margin-bottom:25px;
+
+    color:#0f172a;
+}
+
+canvas{
+
+    width:100%!important;
+
+    height:350px!important;
+}
+
+/* ===========================
+   FORMS
+=========================== */
+
+form{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    margin-top:25px;
+}
+
+label{
+
+    font-weight:600;
+
+    color:#334155;
+
+    display:block;
+
+    margin-bottom:8px;
+}
+
+input,
+select{
+
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid #dbe3ec;
+
+    border-radius:10px;
+
+    margin-bottom:20px;
+
+    font-size:15px;
+
+    transition:.3s;
+}
+
+input:focus,
+select:focus{
+
+    border-color:#2563eb;
+
+    outline:none;
+
+    box-shadow:0 0 8px rgba(37,99,235,.2);
+}
+
+button{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    padding:13px 25px;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+button:hover{
+
+    background:#1d4ed8;
+}
+
+/* ===========================
+   TABLES
+=========================== */
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    background:white;
+
+    margin-top:25px;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+table thead{
+
+    background:#0f172a;
+
+    color:white;
+}
+
+table th{
+
+    padding:18px;
+
+    text-align:left;
+}
+
+table td{
+
+    padding:18px;
+
+    border-bottom:1px solid #edf2f7;
+}
+
+table tbody tr:hover{
+
+    background:#f8fafc;
+}
+
+/* ===========================
+   LINKS
+=========================== */
+
+a{
+
+    color:#2563eb;
+
+    text-decoration:none;
+
+    font-weight:600;
+}
+
+a:hover{
+
+    text-decoration:underline;
+}
+
+/* ===========================
+   FOOTER BUTTONS
+=========================== */
+
+.logout{
+
+    margin-top:35px;
+
+    text-align:right;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:1000px){
+
+.dashboard-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.chart-row{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+@media(max-width:700px){
+
+.dashboard-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.container{
+
+padding:15px;
+
+}
+
+nav{
+
+padding:20px;
+
+flex-direction:column;
+
+height:auto;
+
+}
+
+nav ul{
+
+margin-top:15px;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+}
+
+}

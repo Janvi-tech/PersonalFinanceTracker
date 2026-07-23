@@ -1,0 +1,5 @@
+package com.example.financeTracker.config;
+
+public class SecurityConfig {
+
+}

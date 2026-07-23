@@ -1,0 +1,51 @@
+package com.example.financeTracker.controller;
+
+import com.example.financeTracker.repository.IncomeRepository;
+import com.example.financeTracker.repository.ExpenseRepository;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class DashboardController {
+
+    private final IncomeRepository incomeRepository;
+    private final ExpenseRepository expenseRepository;
+
+    public DashboardController(IncomeRepository incomeRepository, ExpenseRepository expenseRepository) {
+
+        this.incomeRepository = incomeRepository;
+        this.expenseRepository = expenseRepository;
+    }
+
+    @GetMapping("/dashboard")
+    public String showDashboard(Model model) {
+
+        Double totalIncome =
+                incomeRepository.getTotalIncome();
+
+        Double totalExpense =
+                expenseRepository.getTotalExpense();
+
+        Double balance =
+                totalIncome - totalExpense;
+
+        model.addAttribute(
+                "totalIncome",
+                totalIncome
+        );
+
+        model.addAttribute(
+                "totalExpense",
+                totalExpense
+        );
+
+        model.addAttribute(
+                "balance",
+                balance
+        );
+
+        return "dashboard";
+    }
+}

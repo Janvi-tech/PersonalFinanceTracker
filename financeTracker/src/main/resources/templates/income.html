@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Income</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <h1>Income Management</h1>
+
+    <h2>Add Income</h2>
+
+    <form th:action="@{/income/add}"
+          th:object="${income}"
+          method="post">
+
+        <label>Source:</label>
+
+        <input type="text"
+               th:field="*{source}"
+               required>
+
+        <br><br>
+
+        <label>Amount:</label>
+
+        <input type="number"
+               th:field="*{amount}"
+               step="0.01"
+               required>
+
+        <br><br>
+
+        <label>Date:</label>
+
+        <input type="date"
+               th:field="*{incomeDate}"
+               required>
+
+        <br><br>
+
+        <label>Description:</label>
+
+        <input type="text"
+               th:field="*{description}">
+
+        <br><br>
+
+        <button type="submit">
+            Add Income
+        </button>
+
+    </form>
+
+    <hr>
+
+    <h2>Income History</h2>
+
+    <table border="1">
+
+        <tr>
+
+            <th>Source</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Action</th>
+
+        </tr>
+
+        <tr th:each="income : ${incomeList}">
+
+            <td th:text="${income.source}"></td>
+
+            <td th:text="${income.amount}"></td>
+
+            <td th:text="${income.incomeDate}"></td>
+
+            <td th:text="${income.description}"></td>
+
+            <td>
+				
+				<a th:href="@{/income/edit/{id}(id=${income.id})}">
+				    Edit
+				</a>
+
+                <a th:href="@{/income/delete/{id}(id=${income.id})}">
+                    Delete
+                </a>
+
+            </td>
+
+        </tr>
+
+    </table>
+
+    <br>
+</body>
+
+</html>

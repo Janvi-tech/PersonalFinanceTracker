@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Dashboard - Personal Finance Tracker</title>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        .dashboard {
+            display: flex;
+            gap: 20px;
+        }
+
+        .card {
+            padding: 20px;
+            width: 200px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+    </style>
+	
+	<script th:inline="javascript">
+
+	    const expenseData =
+	        /*[[${expenseData}]]*/ [];
+
+	    const categories =
+	        expenseData.map(item => item[0]);
+
+	    const amounts =
+	        expenseData.map(item => item[1]);
+
+	    new Chart(
+	        document.getElementById("expenseChart"),
+	        {
+	            type: "doughnut",
+
+	            data: {
+	                labels: categories,
+
+	                datasets: [{
+	                    label: "Expenses",
+
+	                    data: amounts
+	                }]
+	            },
+
+	            options: {
+	                responsive: true
+	            }
+	        }
+	    );
+
+
+	    const totalIncome = /*[[${totalIncome}]]*/ 0;
+
+	    const totalExpense =/*[[${totalExpense}]]*/ 0;
+
+
+	    new Chart(
+	        document.getElementById("incomeExpenseChart"),
+	        {
+	            type: "bar",
+
+	            data: {
+	                labels: [
+	                    "Income",
+	                    "Expense"
+	                ],
+
+	                datasets: [{
+	                    label: "Amount",
+
+	                    data: [
+	                        totalIncome,
+	                        totalExpense
+	                    ]
+	                }]
+	            },
+
+	            options: {
+	                responsive: true,
+
+	                scales: {
+	                    y: {
+	                        beginAtZero: true
+	                    }
+	                }
+	            }
+	        }
+	    );
+
+	</script>
+
+</head>
+
+<body>
+	
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <h1>Personal Finance Dashboard</h1>
+	
+	<h2>Monthly Summary</h2>
+
+	<form action="/dashboard/monthly"
+	      method="get">
+
+	    <label>Select Month:</label>
+
+	    <select name="month">
+
+	        <option value="1">January</option>
+	        <option value="2">February</option>
+	        <option value="3">March</option>
+	        <option value="4">April</option>
+	        <option value="5">May</option>
+	        <option value="6">June</option>
+	        <option value="7">July</option>
+	        <option value="8">August</option>
+	        <option value="9">September</option>
+	        <option value="10">October</option>
+	        <option value="11">November</option>
+	        <option value="12">December</option>
+
+	    </select>
+
+	    <label>Year:</label>
+
+	    <input type="number"
+	           name="year"
+	           value="2026"
+	           min="2000"
+	           max="2100">
+
+	    <button type="submit">
+	        View Summary
+	    </button>
+		
+		<h2>Selected Month Analysis</h2>
+
+		<div style="width: 600px;">
+
+		    <canvas id="monthlyChart"></canvas>
+
+		</div>
+
+	</form>
+    <div class="dashboard">
+
+        <div class="card">
+            <h3>Total Income</h3>
+
+            <p>
+                ₹<span th:text="${totalIncome}">
+                    0
+                </span>
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Total Expenses</h3>
+
+            <p>
+                ₹<span th:text="${totalExpense}">
+                    0
+                </span>
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Current Balance</h3>
+
+            <p>
+                ₹<span th:text="${balance}">
+                    0
+                </span>
+            </p>
+        </div>
+
+    </div>
+
+    <br>
+	
+	<h2>Expense by Category</h2>
+
+	<div style="width: 500px;">
+	    <canvas id="expenseChart"></canvas>
+	</div>
+
+	<hr>
+
+	<h2>Income vs Expense</h2>
+
+	<div style="width: 600px;">
+	    <canvas id="incomeExpenseChart"></canvas>
+	</div>
+
+    <a href="/logout">Logout</a>
+
+</body>
+
+</html>

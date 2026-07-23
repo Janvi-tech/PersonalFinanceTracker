@@ -1,0 +1,55 @@
+package com.example.financeTracker.controller;
+
+import com.example.financeTracker.entity.Income;
+import com.example.financeTracker.repository.IncomeRepository;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping("/income")
+public class IncomeController {
+
+    private final IncomeRepository incomeRepository;
+
+    public IncomeController(
+            IncomeRepository incomeRepository) {
+
+        this.incomeRepository = incomeRepository;
+    }
+
+    @GetMapping
+    public String showIncomePage(Model model) {
+
+        model.addAttribute(
+                "incomeList",
+                incomeRepository.findAll()
+        );
+
+        model.addAttribute(
+                "income",
+                new Income()
+        );
+
+        return "income";
+    }
+
+    @PostMapping("/add")
+    public String addIncome(
+            @ModelAttribute Income income) {
+
+        incomeRepository.save(income);
+
+        return "redirect:/income";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteIncome(
+            @PathVariable Long id) {
+
+        incomeRepository.deleteById(id);
+
+        return "redirect:/income";
+    }
+}

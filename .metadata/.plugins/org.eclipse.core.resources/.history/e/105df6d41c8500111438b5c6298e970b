@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Dashboard - Personal Finance Tracker</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        .dashboard {
+            display: flex;
+            gap: 20px;
+        }
+
+        .card {
+            padding: 20px;
+            width: 200px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Personal Finance Dashboard</h1>
+
+    <div class="dashboard">
+
+        <div class="card">
+            <h3>Total Income</h3>
+
+            <p>
+                ₹<span th:text="${totalIncome}">
+                    0
+                </span>
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Total Expenses</h3>
+
+            <p>
+                ₹<span th:text="${totalExpense}">
+                    0
+                </span>
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Current Balance</h3>
+
+            <p>
+                ₹<span th:text="${balance}">
+                    0
+                </span>
+            </p>
+        </div>
+
+    </div>
+
+    <br>
+
+    <a href="/logout">Logout</a>
+
+</body>
+
+</html>

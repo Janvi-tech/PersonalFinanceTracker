@@ -1,0 +1,24 @@
+package com.example.financeTracker.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class DashboardController {
+
+    @GetMapping("/dashboard")
+    public String showDashboard(Model model) {
+
+        // Temporary values
+        double totalIncome = 0.0;
+        double totalExpense = 0.0;
+        double balance = totalIncome - totalExpense;
+
+        model.addAttribute("totalIncome", totalIncome);
+        model.addAttribute("totalExpense", totalExpense);
+        model.addAttribute("balance", balance);
+
+        return "dashboard";
+    }
+}
